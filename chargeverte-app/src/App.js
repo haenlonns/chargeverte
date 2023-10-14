@@ -1,7 +1,6 @@
 import React from 'react'; 
 import './App.css'; 
 import graph from './images/co2 emissions by time crop.png';
-import bar from './images/bar.png';
 
 import Stack from 'stack-styled';
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components'
@@ -12,6 +11,8 @@ import {
   marginRight,
 } from 'styled-system'
 import { width, height, space, color } from 'styled-system';
+
+import CarbonChargeTime from './CarbonChargeTime';
 
 const Box = styled('div')(
 	{
@@ -93,6 +94,7 @@ function App() {
         <Para>
           To minimise carbon output, you should start charging at:
         </Para>
+        <CarbonChargeTime />
 
       </Stack>
     </Stack>
