@@ -17,7 +17,7 @@ def push_co2_charge(hours):
     data = getData("forecast")
     df = createDataFrame(data)
     chargetime = calculateMinCarbon(df, hours)
-    return chargetime.strftime("%I:%M%p - %m/%d/%Y")
+    return { "data": chargetime.strftime("%I:%M%p - %m/%d/%Y") }
     
 if __name__ == '__main__':
     app.run(debug=True)
