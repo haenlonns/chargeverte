@@ -11,4 +11,4 @@ if __name__ == "__main__":
     # plt.plot(df["datetime"], df["carbonIntensity"])
     # plt.show()
 
-    print(calculateMinCarbon(df, hoursToCharge=4))
+    print({ "data": calculateMinCarbon(df, hoursToCharge=4) })
