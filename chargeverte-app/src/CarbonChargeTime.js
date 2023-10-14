@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function CarbonChargeTime() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:5000/api/mincarboncharge/5') // Replace with your Flask API URL
-      .then((response) => response.json())
-      .then((data) => setData(data));
+    axios.get('http://127.0.0.1:5000/api/mincarboncharge/5')
+    .then((response) => {
+      setData(response.data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
   }, []);
 
   return (

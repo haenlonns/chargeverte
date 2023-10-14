@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from datetime import datetime
 
 from getData import getData
@@ -6,6 +7,7 @@ from createDataFrame import createDataFrame
 from calculateMin import calculateMinCarbon
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/api/forecast")
 def push_data():
