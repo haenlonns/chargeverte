@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-from calculateMin import calculateMin
+from calculateMin import calculateMinCarbon
 from getData import getData
 from createDataFrame import createDataFrame
 
@@ -11,4 +11,4 @@ if __name__ == "__main__":
     # plt.plot(df["datetime"], df["carbonIntensity"])
     # plt.show()
 
-    print(calculateMin(df, hoursToCharge=4))
+    print(calculateMinCarbon(df, hoursToCharge=4))
