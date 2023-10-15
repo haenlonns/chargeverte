@@ -1,5 +1,5 @@
 import pandas as pd
-import datetime
+from datetime import datetime
 
 def calculateMinCarbon(df: pd.DataFrame, hoursToCharge: int) -> datetime:
 
@@ -13,4 +13,4 @@ def calculateMinCarbon(df: pd.DataFrame, hoursToCharge: int) -> datetime:
             minHour = df.iloc[i]["datetime"]
             minIntensity = intensity
     
-    return minHour
+    return minHour.isoformat()

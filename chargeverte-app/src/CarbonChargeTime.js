@@ -2,22 +2,20 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function CarbonChargeTime() {
-  const [data, setData] = useState([]);
+  const [time, setTime] = useState([]);
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:5000/api/mincarboncharge/5')
-    .then((response) => {
-      setData(response.data);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-  }, []);
+    const apiUrl = "http://127.0.0.1:5000/api/mincarboncharge/4"
+    axios.get(apiUrl)
+      .then((response) => {
+        setTime(response.data.time)
+      })
+    }, []);
 
+  const returnTime = Date(time).toLocaleString('en-US', { timeZone: 'America/New_York' })
   return (
     <div>
-      <h1>React App Listening to Flask API</h1>
-      <p>API Data: {JSON.stringify(data)}</p>
+      <p>API Data: {time}</p>
     </div>
   );
 }

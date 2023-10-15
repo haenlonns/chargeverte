@@ -1,25 +1,24 @@
-from flask import Flask
-from flask_cors import CORS
 from datetime import datetime
+import taipy as ty
+from taipy import Gui
 
 from getData import getData
 from createDataFrame import createDataFrame
 from calculateMin import calculateMinCarbon
 
-app = Flask(__name__)
-CORS(app)
+data = getData("forecast")
+df = createDataFrame(data)
+minTime = calculateMinCarbon(df, 4)
 
-@app.route("/api/forecast")
-def push_data():
-    data = getData("forecast")
-    return data
+text = minTime
+inputText = 0
 
-@app.route("/api/mincarboncharge/<int:hours>")
-def push_co2_charge(hours):
-    data = getData("forecast")
-    df = createDataFrame(data)
-    chargetime = calculateMinCarbon(df, hours)
-    return { "data": chargetime.strftime("%I:%M%p - %m/%d/%Y") }
-    
-if __name__ == '__main__':
-    app.run(debug=True)
+page = """
+# Getting started with Taipy GUI
+
+Ideal Charge Time: <|{text}|>
+
+<|{inputText}|input|>
+"""
+
+Gui(page).run()
