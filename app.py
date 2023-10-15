@@ -1,24 +1,22 @@
-from datetime import datetime
-import taipy as ty
 from taipy import Gui
 
 from getData import getData
 from createDataFrame import createDataFrame
 from calculateMin import calculateMinCarbon
+from buildGraph import buildGraph
 
 data = getData("forecast")
 df = createDataFrame(data)
-minTime = calculateMinCarbon(df, 4)
 
-text = minTime
-inputText = 0
+chargeData = calculateMinCarbon(df, 2)
+graphData, propertyData, options = buildGraph(df, chargeData)
+
+minTime = chargeData["time"].strftime(f"%Y-%m-%d %I:%M %p")
 
 page = """
-# Getting started with Taipy GUI
 
-Ideal Charge Time: <|{text}|>
+<|{minTime}|text|>
+<|{graphData}|chart|properties={propertyData}|options={options}|>
 
-<|{inputText}|input|>
 """
-
 Gui(page).run()
