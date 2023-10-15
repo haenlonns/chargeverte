@@ -1,29 +1,17 @@
-from datetime import datetime
-import taipy as ty
 from taipy import Gui
 
 from getData import getData
 from createDataFrame import createDataFrame
 from calculateMin import calculateMinCarbon
+from buildGraph import buildGraph
 
 data = getData("forecast")
 df = createDataFrame(data)
 
-inputText = 0
-start=0
-end=0
-numHours=0
-startTime=start
+chargeData = calculateMinCarbon(df, 2)
+graphData, propertyData, options = buildGraph(df, chargeData)
 
-minTime = calculateMinCarbon(df, numHours)
-
-def button_pressed(state):
-    state.numHours = int(state.numHours)
-    state.minTime = calculateMinCarbon(df, state.numHours)
-    print(state.numHours) 
-    print(state.minTime)
-    return state.minTime
-
+minTime = chargeData["time"].strftime(f"%Y-%m-%d %I:%M %p")
 
 page = """
 
@@ -41,6 +29,10 @@ Hours: <|{numHours}|input|> \n
 
 
 <|{minTime}|>
+
+
+<|{minTime}|text|>
+<|{graphData}|chart|properties={propertyData}|options={options}|>
 
 """
 
