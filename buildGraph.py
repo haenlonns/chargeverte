@@ -3,7 +3,7 @@ import pandas as pd
 def buildGraph(df: pd.DataFrame, graphDetails: dict) -> dict:
 
     carbonData = df.iloc[0:34]
-    chargePeriod = [100 if graphDetails["index"] <= i <= (graphDetails["index"] + graphDetails["duration"] - 1) else None for i in range(34)]
+    chargePeriod = [80 if graphDetails["index"] <= i <= (graphDetails["index"] + graphDetails["duration"]) else None for i in range(34)]
 
     graphData: dict = {
         "Date & Time": carbonData["datetime"].dt.strftime(f"%Y-%m-%d %H:%M:%S"),

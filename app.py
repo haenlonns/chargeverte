@@ -8,32 +8,31 @@ from buildGraph import buildGraph
 data = getData("forecast")
 df = createDataFrame(data)
 
-chargeData = calculateMinCarbon(df, 2)
+numHours = 0
+chargeData = calculateMinCarbon(df, numHours)
 graphData, propertyData, options = buildGraph(df, chargeData)
+renderFlag = False
+minTime = ""
 
-minTime = chargeData["time"].strftime(f"%Y-%m-%d %I:%M %p")
+md = """
+<center><|assets/logo.png|image|></center>
 
-page = """
+<|How many hours do you need to charge for?|text|> \n
 
-<center>
-<|navbar|lov={[("page", "ChargeVerte")]}|>
-</center>
+<|Hours: |text|> <|{numHours}|input|> \n
 
-What interval do you want to charge during? (Enter times as 24-hour: ex. 6:30 is 1830)\n
-Start: <|{start}|input|> \n
-End: <|{end}|input|> \n
-How many hours do you need to charge for? \n
-Hours: <|{numHours}|input|> \n
+<|Calculate Optimal Time|button|on_action=buttonPressed|>
 
-<|Calculate Optimal Time|button|on_action=button_pressed|>
-
-
-<|{minTime}|>
-
-
-<|{minTime}|text|>
+<|Ideal Charging Time: |text|> <|{minTime}|text|> \n
 <|{graphData}|chart|properties={propertyData}|options={options}|>
 
 """
 
-Gui(page).run(use_reloader=True, dark_mode=False)
+def buttonPressed(state):
+    intHours = int(state.numHours)
+    chargeData = calculateMinCarbon(df, intHours)
+    state.minTime = chargeData["time"].strftime(f"%Y-%m-%d %I:%M %p")
+    state.graphData, state.propertyData, state.options = buildGraph(df, chargeData)
+    state.renderFlag = True
+
+Gui(md).run(use_reloader=True)
